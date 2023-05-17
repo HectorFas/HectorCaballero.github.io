@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-
-
 <aside>
+    
     <div class="title">
         <h1 class="name">Héctor</h1>
         <h1 class="surname">Caballero Fas</h1>
+        <p>Hola! </p>
+        <p>Soy un&nbsp;<span class="tw1"><span>estudiante</span><span>desarrollador web</span></span></p>
     </div>
   
     <div class="contacto">
@@ -33,9 +33,10 @@
         <ul>
             <h2>Habilidades</h2>
             <li>Java</li>
-            <li>PostgresSQL</li>
+            <li>PostgreSQL</li>
             <li>HTML</li>
             <li>CSS</li>
+            <li>GitHub</li>
             <li>JavaScript</li>
             <li>Mantenimiento equipos</li>
             <li>Virtualizacion</li>
@@ -111,15 +112,70 @@
 
 
 <style>
+    .tw1 {
+        padding-right: 0.05em;
+        border-right: 2px solid rgb(53, 1, 138);
+        animation-name: parpadeo;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+    }
+
+    @keyframes parpadeo {
+        0%, 100% {
+            border-color: transparent;
+        }
+        50% {
+            border-color: rgb(47, 4, 128)
+        }
+    }
+</style>
+<script>
+
+async function doWrite(element)  {
+    const paraules =[...element.querySelectorAll("span")].map(span => span.innerText);
+
+    while(true){
+        for (let t=0; t<paraules.length; t++){
+            for (let l=0; l<paraules[t].length; l++){
+                element.innerText = paraules[t].substring(0,l+1);
+                await sleep(100);
+            }
+
+            await sleep(2000);
+
+            for (let l=paraules[t].length; l>=0; l--) {
+                await sleep(50);
+                element.innerText = paraules[t].substring(0, l);
+            }
+            await sleep(600);
+        }
+    }
+}
+
+document.querySelectorAll(".tw1").forEach(tw => doWrite(tw))
+
+function sleep(ms) {return new Promise(r => setTimeout(r, ms));}
+</script>
+
+
+<style>
     @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;800&display=swap');
 
 
+    html {
+        background-color: #eee;
+
+    }
 
     body{
         font-family: 'Inter tight', sans-serif;
         display: grid;
         grid-template-columns: 1fr;
         margin: 0em;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        background-color: white;
+        box-shadow: 0px 0px 8px gray;
     }
 
     .title .name {
@@ -136,9 +192,26 @@
         margin-top: -0.8em;
         color: transparent;
         background: rgb(254,254,254);
-        background: radial-gradient(circle, rgb(216, 183, 34) 0%, rgb(171, 174, 177) 100%);
+        background: radial-gradient(circle, rgb(187, 187, 187) 0%, rgb(32, 133, 235) 100%);
         background-clip: text;
         -webkit-background-clip: text;
+    }
+
+    .title .tw1 {
+        
+        font-size: 1.2em;
+        color: transparent;
+        background: rgb(254,254,254);
+        background: radial-gradient(circle, rgb(160, 83, 233) 0%, rgb(212, 131, 10) 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+    }
+
+    .title p {
+        margin: 0;
+        color: white;
+        font-weight: bold;
+        font-size: 1.1em;
     }
 
     .timeline > li {
@@ -182,8 +255,9 @@
 
     @media screen and (min-width: 968px) {
         body {
-            grid-template-columns: 2fr 7fr;
-            margin: auto;
+            grid-template-columns: 3fr 7fr;
+            margin-left: auto;
+            margin-right: auto;
             max-width: 968px;
         }
     }
